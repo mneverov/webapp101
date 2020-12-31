@@ -15,7 +15,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestGet(t *testing.T) {
+func TestMetricDB_Get(t *testing.T) {
 	metricStartTime, err := time.Parse(time.RFC3339, "2020-12-21T23:00:00Z")
 	require.NoError(t, err)
 
@@ -44,12 +44,12 @@ func TestGet(t *testing.T) {
 		assert.Equal(t, res.Name, f.Name)
 		for _, m := range res.Metrics {
 			assert.Equal(t, f.Name, m.Name)
-			assert.True(t, !m.CreatedAt.After(expectedOldestTimestamp))
+			assert.True(t, !m.CreatedAt.Before(expectedOldestTimestamp))
 		}
 	})
 }
 
-func TestCreate(t *testing.T) {
+func TestMetricDB_Create(t *testing.T) {
 	db := testDB(t)
 
 	t.Run("should return error when metric is invalid", func(t *testing.T) {
