@@ -1,0 +1,48 @@
+- id: 0
+  name: github_jobs
+  status_code: 200
+  response_size: 4098
+  response_time: 300
+  created_at: RAW='2020-12-21T23:00:00Z'::timestamp
+- id: 1
+  name: github_jobs
+  status_code: 200
+  response_size: 4099
+  response_time: 300
+  created_at: RAW='2020-12-21T23:00:00Z'::timestamp + interval '1 seconds'
+- id: 2
+  name: github_jobs
+  status_code: 429
+  response_size: 50
+  response_time: 40
+  created_at: RAW='2020-12-21T23:00:00Z'::timestamp + interval '2 seconds'
+- id: 3
+  name: github_jobs
+  status_code: 200
+  response_size: 4101
+  response_time: 300
+  created_at: RAW='2020-12-21T23:00:00Z'::timestamp + interval '3 seconds'
+- id: 4
+  name: github_jobs
+  status_code: 200
+  response_size: 4111
+  response_time: 320
+  created_at: RAW='2020-12-21T23:00:00Z'::timestamp + interval '4 seconds'
+- id: 5
+  name: example
+  status_code: 200
+  response_size: 2000
+  response_time: 30
+  created_at: RAW='2020-12-21T23:00:00Z'::timestamp
+- id: 6
+  name: example
+  status_code: 200
+  response_size: 2000
+  response_time: 30
+  created_at: RAW='2020-12-21T23:00:00Z'::timestamp + interval '1 seconds'
+- id: 7
+  name: example
+  status_code: 200
+  response_size: 2000
+  response_time: 30
+  created_at: RAW='2020-12-21T23:00:00Z'::timestamp + interval '2 seconds'

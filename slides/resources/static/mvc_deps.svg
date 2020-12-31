@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" contentScriptType="application/ecmascript" contentStyleType="text/css" height="473px" preserveAspectRatio="none" style="width:433px;height:473px;" version="1.1" viewBox="0 0 433 473" width="433px" zoomAndPan="magnify"><defs><filter height="300%" id="f7f017atx8taw" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3"/></filter></defs><g><!--MD5=[5d4cd377749310b66bf14896f5cd8d9b]
+cluster model--><polygon fill="#FFFFFF" filter="url(#f7f017atx8taw)" points="171,390,225,390,232,412.2969,348,412.2969,348,461,171,461,171,390" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="171" x2="232" y1="412.2969" y2="412.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="48" x="175" y="404.9951">model</text><!--MD5=[7579d5565d2521d5936cec86ed3dadee]
+cluster service--><polygon fill="#FFFFFF" filter="url(#f7f017atx8taw)" points="62,102,126,102,133,124.2969,299,124.2969,299,269,62,269,62,102" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="62" x2="133" y1="124.2969" y2="124.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="58" x="66" y="116.9951">service</text><!--MD5=[bd0bd4c41e0e5269e37474fd45a6abb7]
+cluster repository--><polygon fill="#FFFFFF" filter="url(#f7f017atx8taw)" points="151,294,239,294,246,316.2969,370,316.2969,370,365,151,365,151,294" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="151" x2="246" y1="316.2969" y2="316.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="82" x="155" y="308.9951">repository</text><!--MD5=[db7683648a36033af5014485fe1667bc]
+cluster web--><polygon fill="#FFFFFF" filter="url(#f7f017atx8taw)" points="16,6,56,6,63,28.2969,327,28.2969,327,77,16,77,16,6" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="16" x2="63" y1="28.2969" y2="28.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="34" x="20" y="20.9951">web</text><!--MD5=[25f0474bad18d45f403c48464b6d2afd]
+entity metric--><rect fill="#FEFECE" filter="url(#f7f017atx8taw)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="63" x="179.5" y="417"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="174.5" y="422"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="174.5" y="443.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="43" x="189.5" y="439.9951">metric</text><!--MD5=[caf660ac2a54b55a5c31b5515889e628]
+entity config--><rect fill="#FEFECE" filter="url(#f7f017atx8taw)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="62" x="278" y="417"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="273" y="422"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="273" y="443.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="42" x="288" y="439.9951">config</text><!--MD5=[f056b6e85431bb3ed3fa7b83dcf92fc2]
+entity metricService--><rect fill="#FEFECE" filter="url(#f7f017atx8taw)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="113" x="70.5" y="225"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="65.5" y="230"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="65.5" y="251.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="93" x="80.5" y="247.9951">metricService</text><!--MD5=[72d3f370e7658eed83255c324c13cce8]
+entity configService--><rect fill="#FEFECE" filter="url(#f7f017atx8taw)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="112" x="179" y="129"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="174" y="134"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="174" y="155.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="92" x="189" y="151.9951">configService</text><!--MD5=[e428d67dd6a85bbe9182f327dd458874]
+entity scraper--><rect fill="#FEFECE" filter="url(#f7f017atx8taw)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="72" x="219" y="225"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="214" y="230"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="214" y="251.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="52" x="229" y="247.9951">scraper</text><!--MD5=[c7439df27147f438613c4ea9db592d22]
+entity metricDB--><rect fill="#FEFECE" filter="url(#f7f017atx8taw)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="84" x="159" y="321"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="154" y="326"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="154" y="347.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="64" x="169" y="343.9951">metricDB</text><!--MD5=[256c55b908e5abf166f924ee51b8b974]
+entity configDB--><rect fill="#FEFECE" filter="url(#f7f017atx8taw)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="83" x="278.5" y="321"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="273.5" y="326"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="273.5" y="347.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="63" x="288.5" y="343.9951">configDB</text><!--MD5=[a4415060d4cd9895c9c6092e1c29ede9]
+entity metricController--><rect fill="#FEFECE" filter="url(#f7f017atx8taw)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="130" x="24" y="33"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="19" y="38"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="19" y="59.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="110" x="34" y="55.9951">metricController</text><!--MD5=[118b2103f3de5f37963157ea3c8c84d1]
+entity configController--><rect fill="#FEFECE" filter="url(#f7f017atx8taw)" height="36.2969" style="stroke: #A80036; stroke-width: 1.5;" width="129" x="189.5" y="33"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="184.5" y="38"/><rect fill="#FEFECE" height="5" style="stroke: #A80036; stroke-width: 1.5;" width="10" x="184.5" y="59.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="109" x="199.5" y="55.9951">configController</text><!--MD5=[4075a613011d24bfc3bdb31c98161447]
+link metricDB to metric--><path d="M202.8809,357.0569 C204.4909,372.5126 206.8192,394.8647 208.5701,411.6731 " fill="none" id="metricDB-&gt;metric" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="209.0935,416.6977,212.1393,407.3316,208.5754,411.7246,204.1824,408.1607,209.0935,416.6977" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[616d1cc9fea25e5562245709e4e9230e]
+link configDB to config--><path d="M317.931,357.0569 C316.16,372.5126 313.5988,394.8647 311.6729,411.6731 " fill="none" id="configDB-&gt;config" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="311.0971,416.6977,316.0958,408.2117,311.6664,411.7302,308.1478,407.3008,311.0971,416.6977" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[34fc6cced0c50899036f08d0c0da8dfc]
+link metricService to metric--><path d="M125.9134,261.3808 C125.2028,286.1838 126.6244,331.1566 143,365 C152.1737,383.9593 168.4726,401.0117 182.8136,413.5385 " fill="none" id="metricService-&gt;metric" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="186.799,416.9496,182.5622,408.0586,183.0003,413.6985,177.3604,414.1365,186.799,416.9496" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[6f1ec45498984aba057c60abf6511e2b]
+link metricService to metricDB--><path d="M140.9188,261.0569 C153.0381,276.7791 170.6581,299.6375 183.6851,316.5375 " fill="none" id="metricService-&gt;metricDB" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="186.892,320.6977,184.5654,311.1276,183.8394,316.7377,178.2293,316.0117,186.892,320.6977" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[fb7442f0e26c70324e6e95982d867bdb]
+link configService to config--><path d="M266.3058,165.175 C288.8077,179.3652 318.7946,200.707 340,225 C363.0227,251.3749 369.2808,260.0934 378,294 C385.8589,324.5613 389.9708,335.8032 378,365 C370.071,384.3387 353.9339,401.1964 339.2583,413.5201 " fill="none" id="configService-&gt;config" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="335.1658,416.8741,344.6622,414.2628,339.0329,413.7047,339.5911,408.0754,335.1658,416.8741" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[4d4c7228ff824b5eeb5de7bb084c273b]
+link configService to configDB--><path d="M259.4142,165.2784 C276.4414,179.52 298.0073,200.8809 309,225 C322.2629,254.1001 323.2024,291.6328 322.0682,315.516 " fill="none" id="configService-&gt;configDB" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="321.7797,320.6911,326.2747,311.9278,322.0581,315.6989,318.2871,311.4823,321.7797,320.6911" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[8a9c57c6fafe7c9e6f1ac77c8c59fac1]
+link configService to metricService--><path d="M214.686,165.0569 C196.8486,180.9124 170.8464,204.0255 151.7884,220.9658 " fill="none" id="configService-&gt;metricService" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="147.5901,224.6977,156.9742,221.708,151.3271,221.3758,151.6592,215.7287,147.5901,224.6977" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[3077d9548c3c0568a8e28dfda06bc7bf]
+link configService to scraper--><path d="M238.7618,165.0569 C241.9818,180.5126 246.6385,202.8647 250.1402,219.6731 " fill="none" id="configService-&gt;scraper" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="251.187,224.6977,253.2674,215.0711,250.1673,219.8028,245.4356,216.7026,251.187,224.6977" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[312dbe8da9fecce5532e091c59a51757]
+link metricController to metric--><path d="M72.3569,69.4005 C65.2221,78.5154 57.6899,90.1022 54,102 C32.0143,172.8912 32.4916,197.9625 54,269 C73.7417,334.2025 137.6553,386.6311 177.5887,414.0796 " fill="none" id="metricController-&gt;metric" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="181.8551,416.98,176.6611,408.6121,177.7202,414.1689,172.1633,415.228,181.8551,416.98" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[231a8241de53ea3498c49297e368dfb0]
+link configController to config--><path d="M275.4407,69.1871 C285.6498,78.4322 297.6415,90.1905 307,102 C366.7568,177.407 389.1606,199.4546 407,294 C412.8509,325.0084 421.4392,336.9418 407,365 C394.0486,390.167 367.3915,408.2913 345.1451,419.7839 " fill="none" id="configController-&gt;config" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="340.4714,422.1357,350.3089,421.6632,344.9378,419.8882,346.7128,414.517,340.4714,422.1357" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[73ea05b38a8d48c7b32b1b04da83d948]
+link metricController to metricService--><path d="M92.5749,69.0629 C99.5062,104.0841 114.7625,181.1683 122.4225,219.8715 " fill="none" id="metricController-&gt;metricService" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="123.4069,224.8452,125.5832,215.2398,122.436,219.9404,117.7355,216.7932,123.4069,224.8452" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[cd9b40f4bca57e7dc71be28c1b8d8b42]
+link configController to configService--><path d="M250.4262,69.0569 C247.3673,84.5126 242.9434,106.8647 239.6168,123.6731 " fill="none" id="configController-&gt;configService" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="238.6223,128.6977,244.2935,120.6455,239.593,123.7928,236.4457,119.0924,238.6223,128.6977" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[95cb2ac0948517ebc1812517167c5b61]
+@startuml
+
+package "model" {
+  [metric]
+  [config]
+}
+
+package "service" {
+  [metricService]
+  [configService]
+  [scraper]
+}
+
+package "repository" {
+  [metricDB]
+  [configDB]
+}
+
+package "web" {
+  [metricController]
+  [configController]
+}
+
+[metricDB] - -> [metric]
+[configDB] - -> [config]
+[metricService] - -> [metric]
+[metricService] - -> [metricDB]
+[configService] - -> [config]
+[configService] - -> [configDB]
+[configService] - -> [metricService]
+[configService] - -> [scraper]
+[metricController] - -> [metric]
+[configController] - -> [config]
+[metricController] - -> [metricService]
+[configController] - -> [configService]
+
+@enduml
+
+PlantUML version 1.2020.12(Sat Jun 06 12:54:15 CEST 2020)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

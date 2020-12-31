@@ -1,0 +1,37 @@
+@startuml
+
+package "model" {
+  [metric]
+  [config]
+}
+
+package "service" {
+  [metricService]
+  [configService]
+  [scraper]
+}
+
+package "repository" {
+  [metricDB]
+  [configDB]
+}
+
+package "web" {
+  [metricController]
+  [configController]
+}
+
+[metricDB] --> [metric]
+[configDB] --> [config]
+[metricService] --> [metric]
+[metricService] --> [metricDB]
+[configService] --> [config]
+[configService] --> [configDB]
+[configService] --> [metricService]
+[configService] --> [scraper]
+[metricController] --> [metric]
+[configController] --> [config]
+[metricController] --> [metricService]
+[configController] --> [configService]
+
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+
+class config
+class metric
+class scraper
+
+config o-- scraper : uses
+metric o-- config : contains
+scraper o-- metric : returns
+
+@enduml

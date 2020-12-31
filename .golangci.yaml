@@ -1,0 +1,49 @@
+run:
+  timeout: 1m
+  deadline: 3m
+
+issues:
+  exclude-rules:
+  - text: "G104: Errors unhandled"
+    linters:
+    - gosec
+  - text: "at least one file in a package should have a package comment"
+    linters:
+    - stylecheck
+  - text: "should have a package comment, unless it's in another file for this package"
+    linters:
+    - golint
+  - path: _test\.go
+    linters:
+    - gosec
+    - dupl
+  exclude-use-default: false
+
+linters:
+  disable-all: true
+  enable:
+  - bodyclose
+  - deadcode
+  - gochecknoinits
+  - goconst
+  - gocyclo
+  - godot
+  - gofmt
+  - goimports
+  - golint
+  - gosec
+  - gosimple
+  - govet
+  - ineffassign
+  - misspell
+  - nestif
+  - prealloc
+  - scopelint
+  - staticcheck
+  - structcheck
+  - stylecheck
+  - typecheck
+  - unconvert
+  - unparam
+  - unused
+  - varcheck

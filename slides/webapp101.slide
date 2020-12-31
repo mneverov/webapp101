@@ -1,0 +1,288 @@
+WebApp101
+
+Max Neverov
+
+
+* Prerequisites
+
+The following applications should be installed:
+
+- [[https://golang.org/dl/][go (1.15+)]]
+- [[https://docs.docker.com/get-docker/][Docker]]
+- [[https://golangci-lint.run/usage/install/#local-installation][golangci-lint (1.31+)]]
+- [[https://github.com/vektra/mockery][mockery]]
+- make
+- IDE: [[https://www.sublimetext.com/3][Sublime]],
+  [[https://visualstudio.microsoft.com/][VS Code]],
+  [[https://www.jetbrains.com/go/][GoLand]], Emacs, Vim
+- clone [[https://github.com/mneverov/webapp101][webapp101]]
+
+A participant should know how to run an app/tests from the IDE, navigate the code.
+Open the cloned repo in your IDE, check the code if you want to spend 3 hours with it. Run *make*test*.
+
+
+* What's Not In This Workshop
+
+- Docker
+- modules
+- concurrency
+- IDE (can answer questions about GoLand)
+
+
+* Project Structure
+
+- Peter Bourgon's [[https://peter.bourgon.org/go-best-practices-2016/#repository-structure][repository structure]]
+- Tim Hockin's [[https://github.com/thockin/go-build-template][go-build-template]]
+- [[https://github.com/golang-standards/project-layout][Basic layout for Go app]]
+
+	[...] it’s probably a good idea to orient them around the business domain,
+	rather than around accidents of implementation.
+	That is: package user, yes; package models, no.
+
+Other project structures:
+- [[https://itnext.io/hexagonal-architecture-principles-practical-example-in-java-364bb2e50075][Hexagonal architecture]]
+- A small library? Less than N files? Put everything in the root directory!
+
+: ask to switch to 0_repo_exercise branch; talk about cmd; pkg.
+: in our team we use MVC
+: we will see what problems this advice will bring us
+
+
+* Makefile, golangci
+
+- [[https://golangci-lint.run/usage/linters/][linters]]
+- [[https://www.gnu.org/software/make/manual/make.html][make]]:
+  [[https://github.com/kubernetes/kubernetes/blob/master/build/root/Makefile][K8s]],
+  [[https://github.com/prometheus/prometheus/blob/master/Makefile.common][Prometheus]]
+
+: switch to repo, show golangci, makefile
+
+
+* Repository
+
+- [[http://go-database-sql.org/index.html][go database/sql tutorial]]
+- [[https://github.com/jackc/pgx][pgx]]
+- [[https://gorm.io/][gorm]]
+- [[https://github.com/go-pg/pg][go-pg]]
+- [[https://github.com/jmoiron/sqlx][sqlx]]
+- [[https://github.com/volatiletech/sqlboiler][sqlboiler]]
+
+
+* Repo Migrations
+
+- [[https://github.com/go-pg/migrations][go-pg migrations]]
+- [[https://github.com/rubenv/sql-migrate][sql-migrate]]
+- [[https://github.com/golang-migrate/migrate][golang-migrate]]
+- [[https://github.com/pressly/goose][goose]]
+- [[https://flywaydb.org/][flywaydb]]
+- [[https://www.liquibase.org/][liquibase]]
+
+
+* Test Data
+
+Add test data to the migration files. Problems?
+
+
+* Test Data
+
+- [[https://github.com/go-testfixtures/testfixtures][testfixtures]]
+- [[https://github.com/DATA-DOG/go-sqlmock][go-sqlmock]]
+
+
+* Run Test DB
+
+- [[https://github.com/ory/dockertest][ory/dockertest]]
+- [[https://github.com/fortytw2/dockertest][fortytw2/dockertest]]
+- [[https://github.com/testcontainers/testcontainers-go][testcontainers-go]]
+
+* Run Test DB
+
+How many dependencies testcontainers vs dockertest?
+
+- testcontainers: 74 dependencies
+- fortytw2/dockertest: itself + github.com/lib/pq
+- makefile: no dependencies
+
+
+* Exercise 1: Repo Layer
+
+- Fix failing tests for config repo.
+- Implement _metric.Store.Get_ function. Use both fields from the filter.
+
+[[https://pg.uptrace.dev/orm/has-many-relation/][Relevant go-pg doc]]
+
+Useful commands:
+
+	# to run all tests
+	make test
+	
+	# to run tests in the metric package
+	go test -v ./pkg/metric
+
+
+* Bonus Points
+- what is the default pool size?
+- what is the default read timeout?
+- log DB queries with execution time
+  (use [[https://pg.uptrace.dev/hooks/][query hooks]])
+- add _created__at_, _updated__at_ columns to track changes
+- what if you delete _deleted__at_ field from _Config_?
+- try to insert empty URL in config. What's the result? How to handle it?
+
+
+* Problems
+
+What are problems with the current solution?
+
+* Problems
+- code duplication for DB: it creates a new connection pool every time
+- no migrations run in our production code
+- no DB close on tests or the app termination
+- *make*test* leaves the DB running
+- sleep in Makefile
+- tests run sequentially
+
+
+* Scraper
+
+
+* Scraper Testing
+- manual
+- [[https://github.com/h2non/gock][gock]]
+- [[https://github.com/jarcoal/httpmock][httpmock]]
+- [[https://github.com/SpectoLabs/hoverfly][hoverfly]]
+
+
+* Exercise 2: Http Client
+
+- Implement Scrape function.
+
+[[https://golang.org/pkg/net/http/][relevant http doc]]
+Search for client.Do function and how to read response body to get body length.
+
+
+* Problems
+
+What are problems with the current solution?
+
+: show circular dependency (add scraper to config)
+
+* Problems
+All the same as before plus
+- circular dependency
+
+.image ./resources/static/circular_deps.svg 400 300
+
+
+* Solution MVC
+
+.image ./resources/static/mvc_deps.svg 
+
+
+* Service
+codegen for repo
+
+
+* Mocks
+
+[[https://github.com/vektra/mockery][mockery]]
+[[https://github.com/maxbrunsfeld/counterfeiter][counterfeiter]]
+[[https://github.com/gojuno/minimock][minimock]]
+
+
+* Exercise 3
+
+- Implement config service _Update_ function (similar to _Create_).
+
+Bonus Point:
+
+- Implement metric service _Consume_ function. Follow the method doc.
+
+
+* REST
+
+- [[https://www.gorillatoolkit.org/][gorilla]]
+- [[https://github.com/go-chi/chi][chi]]
+- [[https://github.com/gin-gonic/gin][gin]]
+
+
+* Testing REST
+
+- [[https://pkg.go.dev/net/http/httptest][httptest]]
+
+
+* Exercise 4
+
+- Implement config _Update_ function. Write "happy path" test.
+
+Relevant [[https://github.com/go-chi/chi#url-parameters][chi doc]].
+
+
+* Env Variables, 12 factor app
+
+- [[https://peter.bourgon.org/go-for-industrial-programming/#program-configuration][Program configuration]]
+- [[https://12factor.net/config][Config]]
+
+Arguments / Environment Variables Parsing
+
+- [[https://github.com/integrii/flaggy][flaggy]]
+- [[https://github.com/alexflint/go-arg][go-arg]]
+- [[https://github.com/jessevdk/go-flags][go-flags]]
+
+
+* Style Guides
+
+- [[https://golang.org/doc/effective_go.html][effective go]]
+- [[https://github.com/golang/go/wiki/CodeReviewComments][code review comments]]
+- [[https://github.com/uber-go/guide/blob/master/style.md][uber go style guide]]
+
+
+* TODOs
+
+- read configs from the DB on start, create and run scrapers
+- add tests for _ConfigService_Get,_Update,_Delete_ methods
+- make _scrape.Manager_ operations concurrent safe
+  (use [[https://github.com/golang/go/tree/master/src/sync][sync]] package)
+- long tasks cancellation: add context to all layers: Repo, Scraper
+- retry (on recoverable errors) with exponential backoff in scraper
+
+
+* TODOs REST
+
+- add a regexp to configs: search the page response for the info you are
+  interested in
+- add filters to _GET_/metrics_ endpoint:
+  get all with status 500, response time > N ms, response size > N bytes
+- add accept logs as
+  [[https://github.com/go-chi/chi#middleware-handlers][middleware]]
+  that log: HTTP method, URL, status code, body size, processing time, remote IP
+- add _Recoverer_, _Throttle_ and _Timeout_ middleware
+- how [[https://pkg.go.dev/net/http#MaxBytesReader][MaxBytesReader]] can make
+  POST requests safer?
+
+
+* TODOs DB
+
+- log DB queries with execution time: use
+  [[https://pg.uptrace.dev/hooks/][query hooks]]
+- add transactions to _ConfigService_Create,_Update_ methods: the whole
+  operation should be rolled back including changes in DB on error
+- add _created__at_, _updated__at_, _deleted_at_ columns to track changes
+
+
+* TODOs (continued)
+
+- use [[https://www.google.com/search?q=goldenfiles][goldenfiles]] for testing:
+  define expected result entities in json files to compare them later with test
+  results. Build goldenfiles with the data from the DB.
+- add [[https://github.com/Shopify/toxiproxy][toxyproxy]] for resiliency testing
+- embed migration files into binary with
+  [[https://github.com/rakyll/statik][statik]],
+  [[https://github.com/go-bindata/go-bindata][go-bindata]]
+  or [[https://github.com/gobuffalo/packr][packr]]:
+
+Usually, applications are shipped as docker containers where resources can
+easily be copied into the container. To familiarize yourself with *go*generate*
+command (_go_help_generate_) use it with one of the mentioned libraries to embed
+migration files into the final binary.
+

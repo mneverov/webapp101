@@ -1,0 +1,6 @@
+- name: github_jobs
+  url: https://jobs.github.com/positions.json?description=go&page=1
+  scraping_interval: 60s
+- name: example
+  url: http://example.com/
+  scraping_interval: 5s
