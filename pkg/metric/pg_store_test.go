@@ -21,14 +21,15 @@ func TestMetricDB_Get(t *testing.T) {
 
 	db := testDB(t)
 
-	t.Run("should return error when no metrics found", func(t *testing.T) {
+	t.Run("should return empty slice when no metrics found", func(t *testing.T) {
 		f := Filter{
 			Name:  "unknown_metric",
 			Since: metricStartTime,
 		}
-		_, err := db.Get(f)
-		require.Error(t, err)
-		assert.Regexp(t, f.Name, err)
+		res, err := db.Get(f)
+		require.NoError(t, err)
+		assert.NotNil(t, res)
+		assert.Empty(t, res)
 	})
 
 	t.Run("should return found metrics filtered by timestamp", func(t *testing.T) {
@@ -40,9 +41,8 @@ func TestMetricDB_Get(t *testing.T) {
 
 		res, err := db.Get(f)
 		assert.NoError(t, err)
-		assert.Len(t, res.Metrics, 3)
-		assert.Equal(t, res.Name, f.Name)
-		for _, m := range res.Metrics {
+		assert.Len(t, res, 3)
+		for _, m := range res {
 			assert.Equal(t, f.Name, m.Name)
 			assert.True(t, !m.CreatedAt.Before(expectedOldestTimestamp))
 		}

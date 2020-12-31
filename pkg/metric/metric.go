@@ -2,8 +2,6 @@ package metric
 
 import (
 	"time"
-
-	"github.com/mneverov/webapp101/pkg/config"
 )
 
 // Metric represents a single web page metric, gathered with a scraper.
@@ -19,9 +17,7 @@ type Metric struct {
 // Metrics represents a collection of metrics for a web page defined in the
 // config for some period of time.
 type Metrics struct {
-	tableName struct{} `pg:"configs,alias:cfg"` // nolint // tableName is used in go-pg internally
-	config.Config
-	Metrics []Metric `json:"data" pg:"fk:name,rel:has-many"`
+	Data []Metric `json:"data"`
 }
 
 // Filter contains a set of parameters to filter metrics.
@@ -33,5 +29,5 @@ type Filter struct {
 // nolint
 type metricStore interface {
 	Create(metric Metric) (Metric, error)
-	Get(filter Filter) (Metrics, error)
+	Get(filter Filter) ([]Metric, error)
 }
