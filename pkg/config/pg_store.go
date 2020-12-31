@@ -29,7 +29,7 @@ func NewPostgresStorage(opts *pg.Options) (*Postgres, error) {
 	return &Postgres{db: db}, nil
 }
 
-// GetAll returns all existing metrics configs.
+// GetAll returns all existing configs.
 func (s *Postgres) GetAll() ([]Config, error) {
 	configs := make([]Config, 0)
 	err := s.db.Model(&configs).Select()
@@ -66,7 +66,7 @@ func (s *Postgres) GetAllPlainDriver() ([]Config, error) {
 }
 */
 
-// Create creates a new metric config.
+// Create creates a new config.
 func (s *Postgres) Create(cfg Config) (Config, error) {
 	_, err := s.db.Model(&cfg).
 		Returning("*").
@@ -79,7 +79,7 @@ func (s *Postgres) Create(cfg Config) (Config, error) {
 	return cfg, nil
 }
 
-// Get returns a metric config with the given name.
+// Get returns a config with the given name.
 func (s *Postgres) Get(name string) (Config, error) {
 	cfg := Config{Name: name}
 	err := s.db.Model(&cfg).WherePK().Select()
@@ -89,9 +89,9 @@ func (s *Postgres) Get(name string) (Config, error) {
 	return cfg, nil
 }
 
-// Update updates a metric config with the given name.
+// Update updates a config with the given name.
 func (s *Postgres) Update(cfg Config) (Config, error) {
-	_, err := s.db.Model(&cfg).
+	_, err := s.db.Model(&cfg).WherePK().
 		Returning("*").
 		Update()
 	if err != nil {
@@ -101,7 +101,7 @@ func (s *Postgres) Update(cfg Config) (Config, error) {
 	return cfg, nil
 }
 
-// Delete deletes a metric config with the given name.
+// Delete deletes a config with the given name.
 func (s *Postgres) Delete(name string) (Config, error) {
 	cfg := Config{Name: name}
 	_, err := s.db.Model(&cfg).WherePK().

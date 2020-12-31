@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/go-pg/pg/v10"
+	"github.com/go-pg/pg/v10/orm"
 	"github.com/pkg/errors"
 )
 
@@ -45,5 +46,17 @@ func (s *Postgres) Create(metric Metric) (Metric, error) {
 // Get returns metrics that satisfy given filter.
 func (s *Postgres) Get(filter Filter) (Metrics, error) {
 	metrics := Metrics{}
+
+	err := s.db.Model(&metrics).
+		Relation("Metrics", func(q *orm.Query) (*orm.Query, error) {
+			q.Where("created_at >= ?", filter.Since)
+			return q, nil
+		}).
+		Where("cfg.name = ?", filter.Name).
+		Select(&metrics)
+	if err != nil {
+		return Metrics{}, errors.Wrapf(err, "failed to get metrics %s", filter)
+	}
+
 	return metrics, nil
 }
