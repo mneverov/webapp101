@@ -8,13 +8,19 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-
-	"github.com/mneverov/webapp101/pkg/metric"
 )
+
+// Result represent a result of a single web page scrape.
+type Result struct {
+	StatusCode        int
+	ResponseSizeBytes int64
+	ResponseTimeMs    int
+	CreatedAt         time.Time
+}
 
 // Scraper defines methods to work with a web page scraper.
 type Scraper interface {
-	Scrape() (metric.Metric, error)
+	Scrape() (Result, error)
 }
 
 type httpClient interface {
@@ -26,33 +32,31 @@ type httpClient interface {
 type HTTPScraper struct {
 	client httpClient
 	url    string
-	name   string
 }
 
 // NewHTTPScraper returns a new HTTPScraper with the given params.
-func NewHTTPScraper(client httpClient, url, name string) *HTTPScraper {
+func NewHTTPScraper(client httpClient, url string) *HTTPScraper {
 	return &HTTPScraper{
 		client: client,
 		url:    url,
-		name:   name,
 	}
 }
 
 // Scrape retrieves ranks and returns the ranks or an error not
 // longer than the configured timeout.
-func (c *HTTPScraper) Scrape() (metric.Metric, error) {
+func (c *HTTPScraper) Scrape() (Result, error) {
 	// 1. Create a new http request with the scraper url
 	req, err := http.NewRequest(http.MethodGet, c.url, nil)
 	if err != nil {
-		return metric.Metric{},
-			errors.Wrapf(err, "failed to create request for %s", c.name)
+		return Result{},
+			errors.Wrapf(err, "failed to create request for %s", c.url)
 	}
 
 	start := time.Now()
 	// 2. Use the scraper client to do the request
 	resp, err := c.client.Do(req)
 	if err != nil {
-		return metric.Metric{}, errors.Wrapf(err, "request failed for %s", c.name)
+		return Result{}, errors.Wrapf(err, "request failed for %s", c.url)
 	}
 
 	defer func() {
@@ -64,14 +68,13 @@ func (c *HTTPScraper) Scrape() (metric.Metric, error) {
 	// 3. Calculate the result body size
 	bytes, err := io.Copy(ioutil.Discard, resp.Body)
 	if err != nil {
-		return metric.Metric{},
-			errors.Wrapf(err, "failed to read response for %s", c.name)
+		return Result{},
+			errors.Wrapf(err, "failed to read response for %s", c.url)
 	}
 
 	// 4. Measure the time and assemble the Metric
 	responseTime := int(time.Since(start).Milliseconds())
-	m := metric.Metric{
-		Name:              c.name,
+	m := Result{
 		StatusCode:        resp.StatusCode,
 		ResponseSizeBytes: bytes,
 		ResponseTimeMs:    responseTime,

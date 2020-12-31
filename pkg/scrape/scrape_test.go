@@ -13,16 +13,12 @@ import (
 )
 
 func TestScraperHttpMock_Scrape(t *testing.T) {
-	const (
-		testURL        = "https://example.com"
-		testMetricName = "test_metric_name"
-	)
+	const testURL = "https://example.com"
 
 	t.Run("should return error on invalid url", func(t *testing.T) {
 		s := NewHTTPScraper(
 			&http.Client{},
 			"http://.invalid url/",
-			testMetricName,
 		)
 		_, err := s.Scrape()
 
@@ -39,11 +35,11 @@ func TestScraperHttpMock_Scrape(t *testing.T) {
 			httpmock.NewErrorResponder(assert.AnError),
 		)
 
-		c := NewHTTPScraper(&http.Client{}, testURL, testMetricName)
+		c := NewHTTPScraper(&http.Client{}, testURL)
 		_, err := c.Scrape()
 
 		assert.Error(t, err)
-		assert.Regexp(t, testMetricName, err)
+		assert.Regexp(t, testURL, err)
 	})
 
 	t.Run("should return metric when service is unavailable", func(t *testing.T) {
@@ -66,11 +62,10 @@ func TestScraperHttpMock_Scrape(t *testing.T) {
 			},
 		)
 
-		s := NewHTTPScraper(&http.Client{}, testURL, testMetricName)
+		s := NewHTTPScraper(&http.Client{}, testURL)
 		res, err := s.Scrape()
 
 		assert.NoError(t, err)
-		assert.Equal(t, testMetricName, res.Name)
 		assert.Equal(t, http.StatusServiceUnavailable, res.StatusCode)
 		assert.Zero(t, res.ResponseSizeBytes)
 		assert.True(t, res.CreatedAt.After(testStartTime))
@@ -98,11 +93,10 @@ func TestScraperHttpMock_Scrape(t *testing.T) {
 			},
 		)
 
-		s := NewHTTPScraper(&http.Client{}, testURL, testMetricName)
+		s := NewHTTPScraper(&http.Client{}, testURL)
 		res, err := s.Scrape()
 
 		assert.NoError(t, err)
-		assert.Equal(t, testMetricName, res.Name)
 		assert.Equal(t, http.StatusOK, res.StatusCode)
 		assert.Equal(t, int64(7), res.ResponseSizeBytes)
 		assert.True(t, res.CreatedAt.After(testStartTime))

@@ -20,16 +20,12 @@ func (c *clientMock) Do(req *http.Request) (*http.Response, error) {
 }
 
 func TestScraperManual_Scrape(t *testing.T) {
-	const (
-		testURL        = "https://example.com"
-		testMetricName = "test_metric_name"
-	)
+	const testURL = "https://example.com"
 
 	t.Run("should return error on invalid url", func(t *testing.T) {
 		s := NewHTTPScraper(
 			&http.Client{},
 			"http://.invalid url/",
-			testMetricName,
 		)
 		_, err := s.Scrape()
 
@@ -42,22 +38,21 @@ func TestScraperManual_Scrape(t *testing.T) {
 				return nil, assert.AnError
 			},
 		}
-		s := NewHTTPScraper(&client, testURL, testMetricName)
+		s := NewHTTPScraper(&client, testURL)
 		_, err := s.Scrape()
 
 		assert.Error(t, err)
-		assert.Regexp(t, testMetricName, err)
+		assert.Regexp(t, testURL, err)
 	})
 
 	t.Run("should return error when fail to read response body", func(t *testing.T) {
 		client := getClientWithStatusAndBody(http.StatusOK, brokenReadCloser{})
 
-		s := NewHTTPScraper(client, testURL, testMetricName)
+		s := NewHTTPScraper(client, testURL)
 		_, err := s.Scrape()
 
 		assert.Error(t, err)
-		assert.Regexp(t, testMetricName, err)
-
+		assert.Regexp(t, testURL, err)
 	})
 
 	t.Run("should return metric when service is unavailable", func(t *testing.T) {
@@ -66,11 +61,10 @@ func TestScraperManual_Scrape(t *testing.T) {
 			http.StatusServiceUnavailable,
 			ioutil.NopCloser(strings.NewReader("")),
 		)
-		s := NewHTTPScraper(client, testURL, testMetricName)
+		s := NewHTTPScraper(client, testURL)
 		res, err := s.Scrape()
 
 		assert.NoError(t, err)
-		assert.Equal(t, testMetricName, res.Name)
 		assert.Equal(t, http.StatusServiceUnavailable, res.StatusCode)
 		assert.Zero(t, res.ResponseSizeBytes)
 		assert.True(t, res.CreatedAt.After(testStartTime))
@@ -83,11 +77,10 @@ func TestScraperManual_Scrape(t *testing.T) {
 			http.StatusOK,
 			ioutil.NopCloser(strings.NewReader("7 bytes")),
 		)
-		s := NewHTTPScraper(client, testURL, testMetricName)
+		s := NewHTTPScraper(client, testURL)
 		res, err := s.Scrape()
 
 		assert.NoError(t, err)
-		assert.Equal(t, testMetricName, res.Name)
 		assert.Equal(t, http.StatusOK, res.StatusCode)
 		assert.Equal(t, int64(7), res.ResponseSizeBytes)
 		assert.True(t, res.CreatedAt.After(testStartTime))
