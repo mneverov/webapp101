@@ -44,7 +44,7 @@ func TestGet(t *testing.T) {
 		assert.Equal(t, res.Name, f.Name)
 		for _, m := range res.Metrics {
 			assert.Equal(t, f.Name, m.Name)
-			assert.True(t, !m.CreatedAt.After(expectedOldestTimestamp))
+			assert.True(t, !m.CreatedAt.Before(expectedOldestTimestamp))
 		}
 	})
 }
