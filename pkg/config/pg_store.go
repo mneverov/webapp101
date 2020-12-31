@@ -1,9 +1,6 @@
 package config
 
 import (
-	"context"
-	"log"
-
 	"github.com/go-pg/pg/v10"
 	"github.com/pkg/errors"
 )
@@ -15,18 +12,8 @@ type Postgres struct {
 }
 
 // NewPostgresStorage creates a new instance of the Postgres Storage.
-func NewPostgresStorage(opts *pg.Options) (*Postgres, error) {
-	db := pg.Connect(opts)
-
-	if err := db.Ping(context.Background()); err != nil {
-		_ = db.Close()
-		return nil, errors.Wrapf(err, "failed to ping config DB")
-	}
-
-	log.Printf("config: connected to \"postgres://%s:***@%s/%s\" sslmode enabled=%t\n",
-		opts.User, opts.Addr, opts.Database, opts.TLSConfig != nil)
-
-	return &Postgres{db: db}, nil
+func NewPostgresStorage(db *pg.DB) *Postgres {
+	return &Postgres{db: db}
 }
 
 // GetAll returns all existing configs.

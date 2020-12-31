@@ -1,25 +1,22 @@
 package metric
 
 import (
-	"database/sql"
-	"fmt"
-	"strings"
 	"testing"
 	"time"
 
-	"github.com/go-pg/migrations/v8"
-	"github.com/go-pg/pg/v10"
-	"github.com/go-testfixtures/testfixtures/v3"
 	_ "github.com/lib/pq"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/mneverov/webapp101/pkg/testutil"
 )
 
 func TestMetricDB_Get(t *testing.T) {
 	metricStartTime, err := time.Parse(time.RFC3339, "2020-12-21T23:00:00Z")
 	require.NoError(t, err)
 
-	db := testDB(t)
+	conn := testutil.TestDB(t, dbOpts, "metric")
+	db := NewPostgresStorage(conn)
 
 	t.Run("should return empty slice when no metrics found", func(t *testing.T) {
 		f := Filter{
@@ -50,7 +47,8 @@ func TestMetricDB_Get(t *testing.T) {
 }
 
 func TestMetricDB_Create(t *testing.T) {
-	db := testDB(t)
+	conn := testutil.TestDB(t, dbOpts, "metric")
+	db := NewPostgresStorage(conn)
 
 	t.Run("should return error when metric is invalid", func(t *testing.T) {
 		unknownMetric := Metric{Name: "unknown_metric"}
@@ -73,88 +71,4 @@ func TestMetricDB_Create(t *testing.T) {
 		m.CreatedAt = res.CreatedAt
 		assert.Equal(t, m, res)
 	})
-}
-
-func testDB(t *testing.T) *Postgres {
-	opts := pg.Options{
-		Addr:     "127.0.0.1:5544",
-		User:     "webapp101",
-		Password: "webapp101",
-		Database: "webapp101_test",
-	}
-	db, err := NewPostgresStorage(&opts)
-	require.NoError(t, err)
-
-	migrate(t, &opts)
-
-	fixturesDB, err := connectDB(&opts)
-	if err != nil {
-		t.Fatalf("metric: failed to connect %+v\n", err)
-	}
-	err = loadFixtures(fixturesDB)
-	if err != nil {
-		t.Fatalf("metric: failed to load fixtures %+v\n", err)
-	}
-
-	return db
-}
-
-func migrate(t *testing.T, opts *pg.Options) {
-	col := migrations.NewCollection()
-	err := col.DiscoverSQLMigrations("../../resources/migrations")
-	if err != nil {
-		t.Fatalf("metric: failed to discover migrations %+v\n", err)
-	}
-	// need to have *pg.DB, not our defined PostgresStorage
-	migrationsDB := pg.Connect(opts)
-	defer migrationsDB.Close()
-
-	// it is mandatory to run init before migrations:
-	// see https://github.com/go-pg/migrations/issues/48
-	_, _, err = col.Run(migrationsDB, "init")
-	if err != nil {
-		t.Fatalf("metric: failed to init migrations %+v\n", err)
-	}
-
-	oldVersion, newVersion, err := col.Run(migrationsDB, "reset")
-	if err != nil {
-		t.Fatalf("metric: failed to reset migrations %+v\n", err)
-	}
-	t.Logf("config: reset migrations from %d to %d \n", oldVersion, newVersion)
-
-	// even if Run accepts vararg of commands, all should run separately
-	oldVersion, newVersion, err = col.Run(migrationsDB, "up")
-	if err != nil {
-		t.Fatalf("metric: failed to apply migrations %+v\n", err)
-	}
-	t.Logf("metric: apply migrations from %d to %d \n", oldVersion, newVersion)
-}
-
-func loadFixtures(conn *sql.DB) error {
-	fixtures, err := testfixtures.New(
-		testfixtures.Database(conn),
-		testfixtures.Dialect("postgres"),
-		testfixtures.Directory("../../resources/fixtures"),
-	)
-	if err != nil {
-		return err
-	}
-
-	return fixtures.Load()
-}
-
-func connectDB(opts *pg.Options) (*sql.DB, error) {
-	source := fmt.Sprintf("user=%s password='%s' host=%s port=%s dbname=%s sslmode=disable",
-		opts.User,
-		opts.Password,
-		strings.Split(opts.Addr, ":")[0],
-		strings.Split(opts.Addr, ":")[1],
-		opts.Database,
-	)
-	conn, err := sql.Open("postgres", source)
-	if err != nil {
-		return nil, err
-	}
-
-	return conn, nil
 }
