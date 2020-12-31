@@ -27,7 +27,7 @@ var (
 	}
 )
 
-func TestGetAll(t *testing.T) {
+func TestConfigDB_GetAll(t *testing.T) {
 	db := testDB(t)
 	t.Run("should return found configs", func(t *testing.T) {
 		res, err := db.GetAll()
@@ -49,13 +49,16 @@ func TestGetAll(t *testing.T) {
 	})
 }
 
-func TestCreate(t *testing.T) {
+func TestConfigDB_Create(t *testing.T) {
 	db := testDB(t)
-	t.Run("should return error when failed to create config (duplicated name)", func(t *testing.T) {
-		_, err := db.Create(exampleCfg)
-		require.Error(t, err)
-		assert.Regexp(t, exampleCfg.Name, err)
-	})
+	t.Run(
+		"should return error when failed to create config (duplicated name)",
+		func(t *testing.T) {
+			_, err := db.Create(exampleCfg)
+			require.Error(t, err)
+			assert.Regexp(t, exampleCfg.Name, err)
+		},
+	)
 
 	t.Run("should return created config", func(t *testing.T) {
 		res, err := db.Create(testCfg)
@@ -64,7 +67,7 @@ func TestCreate(t *testing.T) {
 	})
 }
 
-func TestGet(t *testing.T) {
+func TestConfigDB_Get(t *testing.T) {
 	db := testDB(t)
 	t.Run("should return error when no config found", func(t *testing.T) {
 		_, err := db.Get("non_existing_config")
@@ -79,7 +82,7 @@ func TestGet(t *testing.T) {
 	})
 }
 
-func TestUpdate(t *testing.T) {
+func TestConfigDB_Update(t *testing.T) {
 	db := testDB(t)
 	t.Run("should return error when no config found", func(t *testing.T) {
 		_, err := db.Update(testCfg)
@@ -96,7 +99,7 @@ func TestUpdate(t *testing.T) {
 	})
 }
 
-func TestDelete(t *testing.T) {
+func TestConfigDB_Delete(t *testing.T) {
 	db := testDB(t)
 	t.Run("should return no error when no config found", func(t *testing.T) {
 		_, err := db.Delete("non_existing_config")
