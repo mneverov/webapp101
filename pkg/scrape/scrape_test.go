@@ -16,11 +16,11 @@ func TestScraperHttpMock_Scrape(t *testing.T) {
 	const testURL = "https://example.com"
 
 	t.Run("should return error on invalid url", func(t *testing.T) {
-		s := NewHTTPScraper(
+		s := newHTTPScraper(
 			&http.Client{},
 			"http://.invalid url/",
 		)
-		_, err := s.Scrape()
+		_, err := s.scrape()
 
 		assert.Error(t, err)
 	})
@@ -35,8 +35,8 @@ func TestScraperHttpMock_Scrape(t *testing.T) {
 			httpmock.NewErrorResponder(assert.AnError),
 		)
 
-		c := NewHTTPScraper(&http.Client{}, testURL)
-		_, err := c.Scrape()
+		c := newHTTPScraper(&http.Client{}, testURL)
+		_, err := c.scrape()
 
 		assert.Error(t, err)
 		assert.Regexp(t, testURL, err)
@@ -62,8 +62,8 @@ func TestScraperHttpMock_Scrape(t *testing.T) {
 			},
 		)
 
-		s := NewHTTPScraper(&http.Client{}, testURL)
-		res, err := s.Scrape()
+		s := newHTTPScraper(&http.Client{}, testURL)
+		res, err := s.scrape()
 
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusServiceUnavailable, res.StatusCode)
@@ -93,8 +93,8 @@ func TestScraperHttpMock_Scrape(t *testing.T) {
 			},
 		)
 
-		s := NewHTTPScraper(&http.Client{}, testURL)
-		res, err := s.Scrape()
+		s := newHTTPScraper(&http.Client{}, testURL)
+		res, err := s.scrape()
 
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusOK, res.StatusCode)

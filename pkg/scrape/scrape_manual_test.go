@@ -23,11 +23,11 @@ func TestScraperManual_Scrape(t *testing.T) {
 	const testURL = "https://example.com"
 
 	t.Run("should return error on invalid url", func(t *testing.T) {
-		s := NewHTTPScraper(
+		s := newHTTPScraper(
 			&http.Client{},
 			"http://.invalid url/",
 		)
-		_, err := s.Scrape()
+		_, err := s.scrape()
 
 		assert.Error(t, err)
 	})
@@ -38,8 +38,8 @@ func TestScraperManual_Scrape(t *testing.T) {
 				return nil, assert.AnError
 			},
 		}
-		s := NewHTTPScraper(&client, testURL)
-		_, err := s.Scrape()
+		s := newHTTPScraper(&client, testURL)
+		_, err := s.scrape()
 
 		assert.Error(t, err)
 		assert.Regexp(t, testURL, err)
@@ -48,8 +48,8 @@ func TestScraperManual_Scrape(t *testing.T) {
 	t.Run("should return error when fail to read response body", func(t *testing.T) {
 		client := getClientWithStatusAndBody(http.StatusOK, brokenReadCloser{})
 
-		s := NewHTTPScraper(client, testURL)
-		_, err := s.Scrape()
+		s := newHTTPScraper(client, testURL)
+		_, err := s.scrape()
 
 		assert.Error(t, err)
 		assert.Regexp(t, testURL, err)
@@ -61,8 +61,8 @@ func TestScraperManual_Scrape(t *testing.T) {
 			http.StatusServiceUnavailable,
 			ioutil.NopCloser(strings.NewReader("")),
 		)
-		s := NewHTTPScraper(client, testURL)
-		res, err := s.Scrape()
+		s := newHTTPScraper(client, testURL)
+		res, err := s.scrape()
 
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusServiceUnavailable, res.StatusCode)
@@ -77,8 +77,8 @@ func TestScraperManual_Scrape(t *testing.T) {
 			http.StatusOK,
 			ioutil.NopCloser(strings.NewReader("7 bytes")),
 		)
-		s := NewHTTPScraper(client, testURL)
-		res, err := s.Scrape()
+		s := newHTTPScraper(client, testURL)
+		res, err := s.scrape()
 
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusOK, res.StatusCode)

@@ -18,13 +18,9 @@ type Result struct {
 	CreatedAt         time.Time
 }
 
-// Scraper defines methods to work with a web page scraper.
-type Scraper interface {
-	Scrape() (Result, error)
-}
-
-type httpClient interface {
-	Do(req *http.Request) (*http.Response, error)
+// scraper defines methods to work with a web page scraper.
+type scraper interface {
+	scrape() (Result, error)
 }
 
 // HTTPScraper represents a web page scraper that access the page by the given
@@ -34,17 +30,17 @@ type HTTPScraper struct {
 	url    string
 }
 
-// NewHTTPScraper returns a new HTTPScraper with the given params.
-func NewHTTPScraper(client httpClient, url string) *HTTPScraper {
+// newHTTPScraper returns a new HTTPScraper with the given params.
+func newHTTPScraper(client httpClient, url string) *HTTPScraper {
 	return &HTTPScraper{
 		client: client,
 		url:    url,
 	}
 }
 
-// Scrape retrieves ranks and returns the ranks or an error not
+// scrape retrieves ranks and returns the ranks or an error not
 // longer than the configured timeout.
-func (c *HTTPScraper) Scrape() (Result, error) {
+func (c *HTTPScraper) scrape() (Result, error) {
 	// 1. Create a new http request with the scraper url
 	req, err := http.NewRequest(http.MethodGet, c.url, nil)
 	if err != nil {
