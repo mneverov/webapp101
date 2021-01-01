@@ -3,6 +3,7 @@ package metric
 //go:generate mockery --inpackage --all --case=underscore
 
 import (
+	"log"
 	"time"
 
 	"github.com/mneverov/webapp101/pkg/scrape"
@@ -65,6 +66,19 @@ func (s *Service) Get(f Filter) (Metrics, error) {
 // Consume exits on result channel close.
 func (s *Service) Consume(name string, resCh <-chan scrape.Result) {
 	// iterate through the resCh.
-	// on each result: assemble Metric
-	//                 store it in DB
+	for r := range resCh {
+		// on each result: assemble Metric
+		m := Metric{
+			Name:              name,
+			StatusCode:        r.StatusCode,
+			ResponseSizeBytes: r.ResponseSizeBytes,
+			ResponseTimeMs:    r.ResponseTimeMs,
+			CreatedAt:         r.CreatedAt,
+		}
+		// store it in DB
+		_, err := s.store.Create(m)
+		if err != nil {
+			log.Printf("failed to store metric %#v %+v", m, err)
+		}
+	}
 }

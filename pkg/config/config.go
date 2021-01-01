@@ -113,6 +113,23 @@ func (s *Service) Get(name string) (Config, error) {
 
 // Update updates a config with the given name.
 func (s *Service) Update(cfg Config) error {
+	duration, err := time.ParseDuration(cfg.ScrapingInterval)
+	if err != nil {
+		return errors.Wrapf(
+			err, "failed to parse scraping interval %q", cfg.ScrapingInterval,
+		)
+	}
+
+	cfg, err = s.store.Update(cfg)
+	if err != nil {
+		return err
+	}
+
+	resCh, err := s.scraperManager.Update(cfg.Name, cfg.URL, duration)
+	if err != nil {
+		return err
+	}
+	go s.metricService.Consume(cfg.Name, resCh)
 	return nil
 }
 
