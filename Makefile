@@ -1,7 +1,11 @@
 clean:
 	rm -rvf ./bin
+	find . -name "mock_*.go" -delete
 
-test:
+generate: clean
+	go generate ./...
+
+test: generate
 	golangci-lint run ./... &&\
 	go test -v -mod=readonly -cover -count=1 ./...
 

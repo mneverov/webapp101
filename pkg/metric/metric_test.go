@@ -3,6 +3,7 @@ package metric
 import (
 	"os"
 	"testing"
+	"time"
 
 	"github.com/go-pg/pg/v10"
 
@@ -10,6 +11,25 @@ import (
 )
 
 var dbOpts pg.Options
+
+var testMetrics = []Metric{
+	{
+		ID:                0,
+		Name:              "test_metric_0",
+		StatusCode:        200,
+		ResponseSizeBytes: 201,
+		ResponseTimeMs:    202,
+		CreatedAt:         time.Now(),
+	},
+	{
+		ID:                1,
+		Name:              "test_metric_0",
+		StatusCode:        400,
+		ResponseSizeBytes: 42,
+		ResponseTimeMs:    50,
+		CreatedAt:         time.Now(),
+	},
+}
 
 func TestMain(m *testing.M) {
 	opts := pg.Options{

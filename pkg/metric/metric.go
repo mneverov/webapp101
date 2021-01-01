@@ -1,7 +1,11 @@
 package metric
 
+//go:generate mockery --inpackage --all --case=underscore
+
 import (
 	"time"
+
+	"github.com/mneverov/webapp101/pkg/scrape"
 )
 
 // Metric represents a single web page metric, gathered with a scraper.
@@ -26,8 +30,41 @@ type Filter struct {
 	Since time.Time
 }
 
-// nolint
 type metricStore interface {
 	Create(metric Metric) (Metric, error)
 	Get(filter Filter) ([]Metric, error)
+}
+
+// nolint
+type metricService interface {
+	Get(f Filter) (Metrics, error)
+	Consume(name string, resCh <-chan scrape.Result)
+}
+
+// Service provides methods to work with Metrics.
+type Service struct {
+	store metricStore
+}
+
+// NewService creates a new metric service.
+func NewService(store metricStore) *Service {
+	return &Service{store: store}
+}
+
+// Get returns metrics that satisfy given filter, or empty Metrics if no
+// metrics found.
+func (s *Service) Get(f Filter) (Metrics, error) {
+	metrics, err := s.store.Get(f)
+	if err != nil {
+		return Metrics{}, err
+	}
+	return Metrics{Data: metrics}, nil
+}
+
+// Consume runs infinite loop to consume all the results from the given channel.
+// Consume exits on result channel close.
+func (s *Service) Consume(name string, resCh <-chan scrape.Result) {
+	// iterate through the resCh.
+	// on each result: assemble Metric
+	//                 store it in DB
 }
