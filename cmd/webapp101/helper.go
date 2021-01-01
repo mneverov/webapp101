@@ -115,6 +115,9 @@ func parseArguments() (*Opts, error) {
 	p := flags.NewParser(&opts, flags.Default)
 
 	if _, err := p.Parse(); err != nil {
+		if flagsErr, ok := err.(*flags.Error); ok && flagsErr.Type == flags.ErrHelp {
+			os.Exit(0)
+		}
 		return nil, fmt.Errorf("error when parsing flags: %s", err)
 	}
 
