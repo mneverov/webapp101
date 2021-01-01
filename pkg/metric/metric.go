@@ -36,7 +36,6 @@ type metricStore interface {
 	Get(filter Filter) ([]Metric, error)
 }
 
-// nolint
 type metricService interface {
 	Get(f Filter) (Metrics, error)
 	Consume(name string, resCh <-chan scrape.Result)

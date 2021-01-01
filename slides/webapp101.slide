@@ -245,6 +245,7 @@ Arguments / Environment Variables Parsing
 - make _scrape.Manager_ operations concurrent safe (use [[https://github.com/golang/go/tree/master/src/sync][sync]] package)
 - long tasks cancellation: add context to all layers: Repo, Scraper
 - retry (on recoverable errors) with exponential backoff in scraper
+- test producer and scraper manager
 
 
 * TODOs REST

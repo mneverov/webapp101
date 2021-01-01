@@ -32,7 +32,6 @@ type configStore interface {
 	Delete(name string) (Config, error)
 }
 
-// nolint
 type configService interface {
 	GetAll() (Configs, error)
 	Create(cfg Config) (Config, error)
