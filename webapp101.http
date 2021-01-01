@@ -1,0 +1,15 @@
+### get all configs
+GET {{host}}/configs
+
+### create config
+POST {{host}}/configs
+Content-Type: application/json
+
+{
+  "name": "example",
+  "url": "https://example.com",
+  "scraping_interval": "10s"
+}
+
+### find metrics with the name since timestamp
+GET {{host}}/metrics?name={{name}}&since={{timestamp}}
