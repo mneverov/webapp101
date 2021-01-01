@@ -12,9 +12,7 @@ The following applications should be installed:
 - [[https://golangci-lint.run/usage/install/#local-installation][golangci-lint (1.31+)]]
 - [[https://github.com/vektra/mockery][mockery]]
 - make
-- IDE: [[https://www.sublimetext.com/3][Sublime]],
-  [[https://visualstudio.microsoft.com/][VS Code]],
-  [[https://www.jetbrains.com/go/][GoLand]], Emacs, Vim
+- IDE: [[https://www.sublimetext.com/3][Sublime]], [[https://visualstudio.microsoft.com/][VS Code]], [[https://www.jetbrains.com/go/][GoLand]], Emacs, Vim
 - clone [[https://github.com/mneverov/webapp101][webapp101]]
 
 A participant should know how to run an app/tests from the IDE, navigate the code.
@@ -27,6 +25,13 @@ Open the cloned repo in your IDE, check the code if you want to spend 3 hours wi
 - modules
 - concurrency
 - IDE (can answer questions about GoLand)
+
+
+* Web Scraper
+
+- GET _/metrics?name={metric_name}&since={timestamp}_
+- POST, GET _/configs_
+- GET, PUT, DELETE _/configs/name_
 
 
 * Project Structure
@@ -51,9 +56,7 @@ Other project structures:
 * Makefile, golangci
 
 - [[https://golangci-lint.run/usage/linters/][linters]]
-- [[https://www.gnu.org/software/make/manual/make.html][make]]:
-  [[https://github.com/kubernetes/kubernetes/blob/master/build/root/Makefile][K8s]],
-  [[https://github.com/prometheus/prometheus/blob/master/Makefile.common][Prometheus]]
+- [[https://www.gnu.org/software/make/manual/make.html][make]]: [[https://github.com/kubernetes/kubernetes/blob/master/build/root/Makefile][K8s]], [[https://github.com/prometheus/prometheus/blob/master/Makefile.common][Prometheus]]
 
 : switch to repo, show golangci, makefile
 
@@ -123,8 +126,7 @@ Useful commands:
 * Bonus Points
 - what is the default pool size?
 - what is the default read timeout?
-- log DB queries with execution time
-  (use [[https://pg.uptrace.dev/hooks/][query hooks]])
+- log DB queries with execution time (use [[https://pg.uptrace.dev/hooks/][query hooks]])
 - add _created__at_, _updated__at_ columns to track changes
 - what if you delete _deleted__at_ field from _Config_?
 - try to insert empty URL in config. What's the result? How to handle it?
@@ -155,9 +157,8 @@ What are problems with the current solution?
 
 * Exercise 2: Http Client
 
-- Implement Scrape function.
+- Implement Scrape function ([[https://golang.org/pkg/net/http/][relevant http doc]])
 
-[[https://golang.org/pkg/net/http/][relevant http doc]]
 Search for client.Do function and how to read response body to get body length.
 
 
@@ -241,48 +242,35 @@ Arguments / Environment Variables Parsing
 
 - read configs from the DB on start, create and run scrapers
 - add tests for _ConfigService_Get,_Update,_Delete_ methods
-- make _scrape.Manager_ operations concurrent safe
-  (use [[https://github.com/golang/go/tree/master/src/sync][sync]] package)
+- make _scrape.Manager_ operations concurrent safe (use [[https://github.com/golang/go/tree/master/src/sync][sync]] package)
 - long tasks cancellation: add context to all layers: Repo, Scraper
 - retry (on recoverable errors) with exponential backoff in scraper
 
 
 * TODOs REST
 
-- add a regexp to configs: search the page response for the info you are
-  interested in
-- add filters to _GET_/metrics_ endpoint:
-  get all with status 500, response time > N ms, response size > N bytes
-- add accept logs as
-  [[https://github.com/go-chi/chi#middleware-handlers][middleware]]
-  that log: HTTP method, URL, status code, body size, processing time, remote IP
+- add GET, PUT, DELETE _/configs/name_
+- add a regexp to configs: search the page response for the info you are interested in
+- add filters to _GET_/metrics_ endpoint: get all with status 500, response time > N ms, response size > N bytes
+- add accept logs as [[https://github.com/go-chi/chi#middleware-handlers][middleware]] that log: HTTP method, URL, status code, body size, processing time, remote IP
 - add _Recoverer_, _Throttle_ and _Timeout_ middleware
-- how [[https://pkg.go.dev/net/http#MaxBytesReader][MaxBytesReader]] can make
-  POST requests safer?
+- how can [[https://pkg.go.dev/net/http#MaxBytesReader][MaxBytesReader]] make POST requests safer?
 
 
 * TODOs DB
 
-- log DB queries with execution time: use
-  [[https://pg.uptrace.dev/hooks/][query hooks]]
-- add transactions to _ConfigService_Create,_Update_ methods: the whole
-  operation should be rolled back including changes in DB on error
-- add _created__at_, _updated__at_, _deleted_at_ columns to track changes
+- log DB queries with execution time (use [[https://pg.uptrace.dev/hooks/][query hooks]])
+- add transactions to _ConfigService_Create,_Update_ methods: the whole operation should be rolled back including changes in DB on error
+- add _created__at_, _updated__at_ columns to track changes
 
 
 * TODOs (continued)
 
-- use [[https://www.google.com/search?q=goldenfiles][goldenfiles]] for testing:
-  define expected result entities in json files to compare them later with test
-  results. Build goldenfiles with the data from the DB.
+- use [[https://www.google.com/search?q=goldenfiles][goldenfiles]] for testing: define expected result entities in json files to compare them later with test results. Build goldenfiles with the data from the DB.
 - add [[https://github.com/Shopify/toxiproxy][toxyproxy]] for resiliency testing
-- embed migration files into binary with
-  [[https://github.com/rakyll/statik][statik]],
-  [[https://github.com/go-bindata/go-bindata][go-bindata]]
-  or [[https://github.com/gobuffalo/packr][packr]]:
+- embed migration files into binary with [[https://github.com/rakyll/statik][statik]], [[https://github.com/go-bindata/go-bindata][go-bindata]] or [[https://github.com/gobuffalo/packr][packr]]:
 
 Usually, applications are shipped as docker containers where resources can
 easily be copied into the container. To familiarize yourself with *go*generate*
 command (_go_help_generate_) use it with one of the mentioned libraries to embed
 migration files into the final binary.
-
