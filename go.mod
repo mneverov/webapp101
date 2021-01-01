@@ -9,6 +9,7 @@ require (
 	github.com/go-pg/pg/v10 v10.7.3
 	github.com/go-testfixtures/testfixtures/v3 v3.4.1
 	github.com/jarcoal/httpmock v1.0.6
+	github.com/jessevdk/go-flags v1.4.0
 	github.com/lib/pq v1.9.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.6.1
