@@ -23,7 +23,6 @@ Open the cloned repo in your IDE, check the code if you want to spend 3 hours wi
 
 - Docker
 - modules
-- concurrency
 - IDE (can answer questions about GoLand)
 
 
@@ -88,7 +87,7 @@ Add test data to the migration files. Problems?
 
 * Test Data
 
-- [[https://github.com/go-testfixtures/testfixtures][testfixtures]]
+- testfixtures ([[https://github.com/go-testfixtures/testfixtures][1]], [[https://youtu.be/8hQG7QlcLBk?t=654][2]])
 - [[https://github.com/DATA-DOG/go-sqlmock][go-sqlmock]]
 
 
@@ -121,6 +120,9 @@ Useful commands:
 	
 	# to run tests in the metric package
 	go test -v ./pkg/metric
+
+	# to run a test/subtest
+	go test -v ./pkg/metric -run=TestGet/error
 
 
 * Bonus Points
@@ -267,7 +269,7 @@ Arguments / Environment Variables Parsing
 
 * TODOs (continued)
 
-- use [[https://www.google.com/search?q=goldenfiles][goldenfiles]] for testing: define expected result entities in json files to compare them later with test results. Build goldenfiles with the data from the DB.
+- use golenfiles ([[https://www.google.com/search?q=goldenfiles][1]], [[https://youtu.be/8hQG7QlcLBk?t=738][2]]) for testing: define expected result entities in json files to compare them later with test results. Build goldenfiles with the data from the DB.
 - add [[https://github.com/Shopify/toxiproxy][toxyproxy]] for resiliency testing
 - embed migration files into binary with [[https://github.com/rakyll/statik][statik]], [[https://github.com/go-bindata/go-bindata][go-bindata]] or [[https://github.com/gobuffalo/packr][packr]]:
 
