@@ -1,5 +1,6 @@
 clean:
 	rm -rvf ./bin
+	find . -name "mock_*.go" -delete
 
 runtests: clean
 	golangci-lint run ./... &&\
