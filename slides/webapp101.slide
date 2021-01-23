@@ -177,9 +177,9 @@ All the same as before plus
 .image ./resources/static/circular_deps.svg 400 300
 
 
-* Solution MVC
+* Solution "Layered Architecture"
 
-.image ./resources/static/mvc_deps.svg 
+.image ./resources/static/layered_architecture.svg
 
 
 * Service
